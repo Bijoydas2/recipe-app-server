@@ -26,7 +26,7 @@ async function run() {
     const db = client.db('recipeDB');
     const recipeCollection = db.collection('recipes');
 
-    app.get('/recipes', async (req, res) => {
+    app.get('/top-recipes', async (req, res) => {
    
         const recipes = await recipeCollection
           .find()
@@ -36,6 +36,14 @@ async function run() {
         res.send(recipes);
       
     });
+
+
+     app.get('/recipes', async (req, res) => {
+    
+        const recipes = await recipeCollection.find().toArray();
+        res.send(recipes);
+      
+      })
 
 
     app.post('/recipes', async (req, res) => {
@@ -64,5 +72,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}`);
+  console.log(`Server running on port: ${port}`);
 });
