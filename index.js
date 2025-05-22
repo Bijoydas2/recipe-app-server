@@ -74,6 +74,33 @@ async function run() {
   res.json(result);
 });
 
+  app.get("/api/my-recipes", async (req, res) => {
+      const { email } = req.query;
+      
+      const result = await recipeCollection.find({ userEmail: email }).toArray();
+      res.send(result);
+    });
+
+app.delete("/api/recipes/:id", async (req, res) => {
+  const id = req.params.id;
+  const result = await recipeCollection.deleteOne({ _id: new ObjectId(id) });
+  res.send(result);
+});
+
+
+
+
+app.put("/api/recipes/:id", async (req, res) => {
+  const id = req.params.id;
+  const updated = req.body;
+  const result = await recipeCollection.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: updated }
+  );
+  res.send(result);
+});
+
+
 
      
 
